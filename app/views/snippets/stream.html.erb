@@ -1,0 +1,96 @@
+<div id="header"></div> 
+<div id="editor"></div>
+<textarea name="code" id="raw_code" type="hidden" style="display: none;"><%= @snippet.code %></textarea>
+<div id="footer">
+  
+  <div >
+    <select class="style_selector">
+      <option value="chrome">Chrome</option>
+      <option value="eclipse">Eclipse</option>
+      <option value="monokai">Monokai</option>
+    </select>
+  </div>
+  <span>Theme</span>
+  
+  <div >
+    <select class="language_selector">
+      <option value="html">HTML</option>
+      <option value="javascript">Javascript</option>
+      <option value="php">PHP</option>
+      <option value="python">Python</option>
+    </select>
+  </div>
+  <span>Language</span>
+</div>
+
+
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/<%= @snippet.language %>");
+    document.querySelector(".language_selector").value = "<%= @snippet.language%>";
+    ace_document = editor.getSession().getDocument();
+
+    session = editor.getSession();
+    selection = session.getSelection();
+
+    <% if @snippet.theme.to_s != "" %>
+      editor.setTheme("ace/theme/<%= @snippet.theme%>");
+      document.querySelector(".style_selector").value = "<%= @snippet.theme%>";
+    <% end %>
+
+    <% if @snippet.code.to_s != "" %>
+      ace_document.setValue(document.getElementById('raw_code').value);
+    <% end %>
+
+    editor.on("change", function (e) {
+        App.snippet.send(build_payload())
+    });
+
+    document.querySelector(".style_selector").addEventListener("change", function (e) {
+        App.snippet.send(build_payload())
+        editor.setTheme("ace/theme/" + e.target.value);
+    });
+
+    document.querySelector(".language_selector").addEventListener("change", function (e) {
+        App.snippet.send(build_payload())
+        editor.getSession().setMode("ace/mode/" + e.target.value);
+    });
+
+    selection.on("changeCursor", function () {
+        App.snippet.send(build_payload())
+    });
+    selection.on("changeSelection", function () {
+        App.snippet.send(build_payload())
+    });
+
+    function build_payload(){
+        return {
+            body: ace_document.getValue(), 
+            event: "snippetChanged",
+            slug: "<%=@snippet.slug%>",
+            theme: document.querySelector(".style_selector").value,
+            language: document.querySelector(".language_selector").value,
+            cursor_position: editor.getCursorPosition(),
+            selection_range: selection.getRange()
+        }
+    }
+
+
+    
+
+    App.snippet = App.cable.subscriptions.create({channel: "SnippetChannel", room: "<%=@snippet.slug%>"}, {
+            connected() {},
+                // Called when the subscription is ready for use on the server
+
+            disconnected() {},
+                // Called when the subscription has been terminated by the server
+
+            received(data) { 
+
+            }
+        }
+    );
+    
+</script>
+

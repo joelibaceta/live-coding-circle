@@ -1,0 +1,48 @@
+// Place all the styles related to the snippets controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$header_height: 40px;
+$sidebar_width: 20%;
+$footer_height: 25px;
+
+#header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $header_height;
+    width: 100%; 
+    background: #FAFAFA;
+    
+}
+
+#editor {
+    position: absolute;
+    top: $header_height;
+    right: 0;
+    bottom: $footer_height;
+    left: 0;
+}
+
+ 
+
+#footer {
+    position: absolute;
+    height: $footer_height;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #FAFAFA; 
+    display: flex; 
+    flex-direction: row-reverse;
+    span {
+        margin-left: 15px;
+        margin-right: 5px;
+        font-size: 12px;
+        vertical-align: middle;
+        padding-top: 3px;
+    }
+    div {
+        margin-right: 10px;
+    }
+}
