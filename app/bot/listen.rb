@@ -18,7 +18,7 @@ def GetAccessToken
 end
 
 def BuildMessage(msg)
-    uri = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=#{AT}")
+    uri = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=#{GetAccessToken}")
 
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/json" 
