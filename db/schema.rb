@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2018_07_26_075011) do
 
-  create_table "messages", force: :cascade do |t|
+  create_table "message", force: :cascade do |t|
     t.string "snippet_id"
     t.string "author"
     t.string "message"
