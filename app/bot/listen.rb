@@ -8,6 +8,8 @@ Bot.on :message do |message|
     sender = message.sender
     
     message.reply(text:  sender.inspect )
+    message.reply(text:  message.class )
+    message.reply(text: message.methods.inspect)
 end
 
 
