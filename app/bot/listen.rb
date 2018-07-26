@@ -11,7 +11,7 @@ Bot.on :message do |message|
         body: message.text
     })
     
-    filtered_messages = Message.where("author != ?", sender).map{|msg| "#{msg.author}: #{msg.body}"}
+    filtered_messages = Message.where("author == ?", sender).map{|msg| "#{msg.author}: #{msg.body}"}
     filtered_reponses = Reponse.where("sender_id != ?", sender).map{|msg| "#{msg.sender_id}: #{msg.body}"}
 
     puts "FILTERED MESSAGES: " + filtered_messages.inspect
