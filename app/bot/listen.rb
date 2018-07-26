@@ -17,6 +17,21 @@ def GetAccessToken
     return "EAAGJcZArwqG0BAAm1rK3iW2fBFMQGsiJ4No061CZAr21wngsiNDKzbcgYgoNkhop2pGZBriQjoQtKLVfLnNVx2l3uoZCBoTnO7QWHjJM3ZBubFYZClyE4PWoZCgogZBolD5TjrJwMJ5DGnMCtPB4vNViziUSmIzjg8VNXlmau0AVuwZDZD"
 end
 
+def getname(id)
+    uri = URI.parse("https://graph.facebook.com/1875848579141429?fields=first_name,last_name,profile_pic&access_token=EAAGJcZArwqG0BAAm1rK3iW2fBFMQGsiJ4No061CZAr21wngsiNDKzbcgYgoNkhop2pGZBriQjoQtKLVfLnNVx2l3uoZCBoTnO7QWHjJM3ZBubFYZClyE4PWoZCgogZBolD5TjrJwMJ5DGnMCtPB4vNViziUSmIzjg8VNXlmau0AVuwZDZD")
+    request = Net::HTTP::Get.new(uri) 
+
+    req_options = {
+    use_ssl: uri.scheme == "https",
+    }
+
+    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+        http.request(request)
+    end
+    json = JSON.parse(response)
+    return "#{first_name} #{last_name}"
+end
+
 def BuildMessage(msg)
     
     uri = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=EAAGJcZArwqG0BAAm1rK3iW2fBFMQGsiJ4No061CZAr21wngsiNDKzbcgYgoNkhop2pGZBriQjoQtKLVfLnNVx2l3uoZCBoTnO7QWHjJM3ZBubFYZClyE4PWoZCgogZBolD5TjrJwMJ5DGnMCtPB4vNViziUSmIzjg8VNXlmau0AVuwZDZD")
@@ -79,7 +94,7 @@ Bot.on :message do |message|
     })
  
     puts "BUILDING MESSAGE"
-    id_msg = BuildMessage("#{sender}: #{message.text}")
+    id_msg = BuildMessage("#{getname(sender)}: #{message.text}")
     puts "MESSAGE BUILDED: #{id_msg} "
     sendBroadcast(id_msg)
 
