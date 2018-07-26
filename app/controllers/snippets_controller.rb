@@ -21,6 +21,7 @@ class SnippetsController < ApplicationController
       @snippet.slug = params[:slug] || SecureRandom.base64
       @snippet.save
     end
+    session[:current_snippet] = @snippet.slug
 end
 
   # GET /snippets/new
