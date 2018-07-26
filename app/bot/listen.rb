@@ -7,13 +7,14 @@ require 'json'
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 def GetAccessToken
-    url = URI("https://graph.facebook.com/v3.0/oauth/access_token? grant_type=fb_exchange_token&client_id=432596000483437&client_secret=270b172b42d4fccd6be9b5e9c8ae63f2&fb_exchange_token=#{ENV["ACCESS_TOKEN"]}&%20grant_type=fb_exchange_token")
+    # url = URI("https://graph.facebook.com/v3.0/oauth/access_token? grant_type=fb_exchange_token&client_id=432596000483437&client_secret=270b172b42d4fccd6be9b5e9c8ae63f2&fb_exchange_token=#{ENV["ACCESS_TOKEN"]}&%20grant_type=fb_exchange_token")
 
-    http = Net::HTTP.new(url.host, url.port)
+    # http = Net::HTTP.new(url.host, url.port)
 
-    request = Net::HTTP::Get.new(url) 
-    response = JSON.parse(http.request(request).read_body)
-    return response["access_token"]
+    # request = Net::HTTP::Get.new(url) 
+    # response = JSON.parse(http.request(request).read_body)
+    # return response["access_token"]
+    return "EAAGJcZArwqG0BAAm1rK3iW2fBFMQGsiJ4No061CZAr21wngsiNDKzbcgYgoNkhop2pGZBriQjoQtKLVfLnNVx2l3uoZCBoTnO7QWHjJM3ZBubFYZClyE4PWoZCgogZBolD5TjrJwMJ5DGnMCtPB4vNViziUSmIzjg8VNXlmau0AVuwZDZD"
 end
 
 def BuildMessage(msg)
