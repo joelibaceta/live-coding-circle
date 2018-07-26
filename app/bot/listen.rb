@@ -6,6 +6,46 @@ require 'json'
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
+def GetAccessToken
+    url = URI("https://graph.facebook.com/v3.0/oauth/access_token? grant_type=fb_exchange_token&client_id=432596000483437&client_secret=270b172b42d4fccd6be9b5e9c8ae63f2&fb_exchange_token=#{ENV["ACCESS_TOKEN"]}&%20grant_type=fb_exchange_token")
+
+    http = Net::HTTP.new(url.host, url.port)
+
+    request = Net::HTTP::Get.new(url) 
+    response = JSON.parse(http.request(request).read_body)
+    return response["access_token"]
+end
+
+def BuildMessage(msg)
+    url = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=#{GetAccessToken}")
+
+    http = Net::HTTP.new(url.host, url.port)
+
+    request = Net::HTTP::Post.new(url)
+    request["Content-Type"] = 'application/json'
+
+    request.body = "{    \n  \"messages\": [\n    {\n    \t\"text\":\"#{msg}\"\n    }\n  ]\n}"
+    
+    response = JSON.parse(http.request(request).read_body)
+    return response["message_creative_id"]
+end
+
+def sendBroadcast(msg_id)
+    require 'uri'
+    require 'net/http'
+
+    url = URI("https://graph.facebook.com/v3.0/me/broadcast_messages?access_token=#{GetAccessToken}")
+
+    http = Net::HTTP.new(url.host, url.port)
+
+    request = Net::HTTP::Post.new(url)
+    request["Content-Type"] = 'application/json' 
+    request.body = "{    \n  \"message_creative_id\": #{msg_id},\n  \"notification_type\": \"REGULAR\",\n  \"messaging_type\": \"MESSAGE_TAG\",\n  \"tag\": \"NON_PROMOTIONAL_SUBSCRIPTION\"\n}"
+
+    response = http.request(request) 
+end
+
+
 Bot.on :message do |message|
     
     sender = message.sender['id']
@@ -24,10 +64,12 @@ Bot.on :message do |message|
 
     messages_to_send = filtered_messages - filtered_reponses
 
+    
 
     
     messages_to_send.each do |msg|
-        message.reply(text: msg)
+        id_msg = BuildMessage(msg)
+        sendBroadcast(id_msg)
     end
     
 end
