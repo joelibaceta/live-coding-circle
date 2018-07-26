@@ -11,7 +11,7 @@ Bot.on :message do |message|
         message: message.text
     })
     
-    filtered_messages = Messages.where("author != ?", sender).map{|msg| "#{msg.author}: #{msg.message}"}
+    filtered_messages = Message.where("author != ?", sender).map{|msg| "#{msg.author}: #{msg.message}"}
     filtered_reponses = Reponse.where("sender_id != ?", sender).map{|msg| "#{msg.sender_id}: #{msg.message}"}
 
     messages_to_send = filtered_messages - filtered_reponses
