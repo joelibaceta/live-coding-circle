@@ -15,6 +15,17 @@
         </g>
     </svg>
     <span> LiveCoder </span>
+    <div class="rightButtons">
+        <a href="javascript:save();"> 
+            <!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg height="16px" id="Layer_1" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="16px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px"><path d="M17.447,16.646C17.08,16.279,16.729,16,16,16s-1.135,0.334-1.463,0.662L10.58,20.62C10.193,21.006,10,21.469,10,22  c0,1.188,1.016,2,2,2c0.516,0,0.986-0.186,1.38-0.58L14,22.8V30c0,1.104,0.896,2,2,2s2-0.896,2-2v-7.2l0.62,0.62  C19.014,23.814,19.484,24,20,24c0.984,0,2-0.813,2-2c0-0.531-0.193-0.994-0.58-1.38L17.447,16.646z M27.952,9.05  C27.473,3.973,23.202,0,18,0c-4.841,0-8.878,3.441-9.801,8.01C8.133,8.008,8.067,8,8,8c-4.418,0-8,3.582-8,8s3.582,8,8,8h0.557  C8.212,23.409,8,22.731,8,22c0-0.727,0.201-1.399,0.562-2H8c-2.206,0-4-1.795-4-4c0-2.178,1.75-3.957,3.918-4l3.534,0.107  l0.668-3.305C12.682,6.02,15.155,4,18,4c3.111,0,5.678,2.332,5.97,5.426l0.195,2.069l1.806,1.03C27.223,13.238,28,14.57,28,16  c0,2.205-1.794,4-4,4h-0.561C23.799,20.6,24,21.273,24,22c0,0.731-0.212,1.409-0.557,2H24c4.418,0,8-3.582,8-8  C32,13.021,30.367,10.427,27.952,9.05z"/></svg>
+        </a>
+        <a href="javascript:shareOnMSN();"> 
+             <svg height="16px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
+                <metadata> Svg Vector Icons : http://www.onlinewebfonts.com/icon </metadata>
+                <g><path d="M800.3,653.6c-46.5,13.2-81.5,47.1-97.9,88.9l-351.9-94c-0.3-14.1-2.2-28.5-6.3-42.7c-1.2-4.1-2.6-8.1-4.1-12.1L590,326.9c35,23.3,79.6,31.8,123.3,19.5c79.2-22.4,125.2-104.8,102.7-184c-22.4-79.2-104.8-125.2-184-102.7c-79.2,22.4-125.2,104.8-102.7,184c4.5,15.7,11.3,30.1,20,42.9L294.4,526.1c-42.1-37.9-102-54.2-160.5-37.6C43.4,514.1-9.1,608.3,16.5,698.8c25.6,90.5,119.8,143,210.3,117.4c48.5-13.7,85.9-47.2,106.5-89.2l358.8,73.2c0.3,12.4,1.9,25,5.5,37.5c22.4,79.2,104.8,125.2,184,102.7c79.2-22.4,125.2-104.8,102.7-184C961.9,677.1,879.5,631.2,800.3,653.6L800.3,653.6z"/></g>
+            </svg>
+        </a>
+    </div>
 </div> 
 <div id="editor"></div>
 <textarea name="code" id="raw_code" type="hidden" style="display: none;"><%= @snippet.code %></textarea>
@@ -40,6 +51,145 @@
   
 </div>
 
+
+<script>
+
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
+
+    var flag_changing = false;
+    var flag_selection_changing = false;
+    var emiter = guid();
+    
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/<%= @snippet.language %>");
+    document.querySelector(".language_selector").value = "<%= @snippet.language%>";
+    ace_document = editor.getSession().getDocument();
+
+    session = editor.getSession();
+    selection = session.getSelection();
+
+    <% if @snippet.theme.to_s != "" %>
+      editor.setTheme("ace/theme/<%= @snippet.theme%>");
+      document.querySelector(".style_selector").value = "<%= @snippet.theme%>";
+    <% end %>
+
+    <% if @snippet.code.to_s != "" %>
+      ace_document.setValue(document.getElementById('raw_code').value);
+    <% end %>
+
+    editor.on("change", function (e) {  
+        if (!flag_changing) {
+            App.snippet.send(build_payload(e))
+        }
+    });
+
+    document.querySelector(".style_selector").addEventListener("change", function (e) {
+        if (!flag_changing) {
+            App.snippet.send(build_payload())
+            editor.setTheme("ace/theme/" + e.target.value);
+        }
+    });
+
+    document.querySelector(".language_selector").addEventListener("change", function (e) {
+        if (!flag_changing) {
+            App.snippet.send(build_payload())
+            editor.getSession().setMode("ace/mode/" + e.target.value);
+        }
+    });
+
+    selection.on("changeCursor", function () {
+        if (!flag_changing) {
+            App.snippet.send(build_payload())
+        }
+    });
+    selection.on("changeSelection", function () {
+        if (!flag_changing) {
+            App.snippet.send(build_payload())
+        }
+    });
+
+    function save()
+    {
+        App.snippet.send(build_payload(null, true))
+    }
+
+    function build_payload(e=null, persist=null){
+        return {
+            persist: persist,
+            emiter: emiter,
+            body: ace_document.getValue(), 
+            e: e,
+            slug: "<%=@snippet.slug%>",
+            theme: document.querySelector(".style_selector").value,
+            language: document.querySelector(".language_selector").value,
+            cursor_position: editor.getCursorPosition(),
+            selection_range: selection.getRange()
+        }
+    }
+
+
+    function shareOnMSN(){
+        FB.ui({
+            method: 'send',
+            link: window.location.href,
+        });
+    }
+    
+
+    App.snippet = App.cable.subscriptions.create({channel: "SnippetChannel", room: "<%=@snippet.slug%>"}, {
+            connected() {},
+                // Called when the subscription is ready for use on the server
+
+            disconnected() {},
+                // Called when the subscription has been terminated by the server
+
+            received(data) {
+
+                
+
+                flag_changing = true;
+                
+                if (data.emiter != emiter) {
+                    var event = new Event('change');
+                    console.log(data.body);
+                    if (data.e != null) {
+                        res = data.e;
+                        switch (res['action']) {
+                        case 'insert': 
+                            position = { row: res['start']['row'], column: res['start']['column'] };
+                            ace_document.insert(position, (res['lines']).join(ace_document.getNewLineCharacter()));
+                            break;
+                        case 'remove':
+                            ace_document.remove({ start: res['start'], end: res['end'] });
+                            break;
+                        }
+                    }
+                
+                    selection.moveToPosition(data.cursor_position);
+                    selection.setSelectionRange(data.selection_range);
+                    document.querySelector(".style_selector").value = data.theme; 
+                    document.querySelector(".language_selector").value = data.language;
+                    editor.setTheme("ace/theme/" + data.theme);
+                    editor.getSession().setMode("ace/mode/" + data.language);
+                }
+                flag_changing = false;
+                
+            }
+        }
+    );
+    
+</script>
+
+
+
 <!-- Load Facebook SDK for JavaScript -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -59,75 +209,3 @@
     logged_out_greeting="Welcome, The live coding session has been started"
     ref="<%= @snippet.slug %>">
 </div>
-
-
-<script>
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
-    editor.getSession().setMode("ace/mode/<%= @snippet.language %>");
-    document.querySelector(".language_selector").value = "<%= @snippet.language%>";
-    ace_document = editor.getSession().getDocument();
-
-    session = editor.getSession();
-    selection = session.getSelection();
-
-    <% if @snippet.theme.to_s != "" %>
-      editor.setTheme("ace/theme/<%= @snippet.theme%>");
-      document.querySelector(".style_selector").value = "<%= @snippet.theme%>";
-    <% end %>
-
-    <% if @snippet.code.to_s != "" %>
-      ace_document.setValue(document.getElementById('raw_code').value);
-    <% end %>
-
-    editor.on("change", function (e) {
-        App.snippet.send(build_payload())
-    });
-
-    document.querySelector(".style_selector").addEventListener("change", function (e) {
-        App.snippet.send(build_payload())
-        editor.setTheme("ace/theme/" + e.target.value);
-    });
-
-    document.querySelector(".language_selector").addEventListener("change", function (e) {
-        App.snippet.send(build_payload())
-        editor.getSession().setMode("ace/mode/" + e.target.value);
-    });
-
-    selection.on("changeCursor", function () {
-        App.snippet.send(build_payload())
-    });
-    selection.on("changeSelection", function () {
-        App.snippet.send(build_payload())
-    });
-
-    function build_payload(){
-        return {
-            body: ace_document.getValue(), 
-            event: "snippetChanged",
-            slug: "<%=@snippet.slug%>",
-            theme: document.querySelector(".style_selector").value,
-            language: document.querySelector(".language_selector").value,
-            cursor_position: editor.getCursorPosition(),
-            selection_range: selection.getRange()
-        }
-    }
-
-
-    
-
-    App.snippet = App.cable.subscriptions.create({channel: "SnippetChannel", room: "<%=@snippet.slug%>"}, {
-            connected() {},
-                // Called when the subscription is ready for use on the server
-
-            disconnected() {},
-                // Called when the subscription has been terminated by the server
-
-            received(data) { 
-
-            }
-        }
-    );
-    
-</script>
-

@@ -62,6 +62,10 @@
 
 
 <script>
+
+    var flag_changing = false;
+    var flag_selection_changing = false;
+
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
     editor.getSession().setMode("ace/mode/<%= @snippet.language %>");
@@ -80,11 +84,15 @@
     <% end %>
 
     document.querySelector(".style_selector").addEventListener("change", function (e) {
-        editor.setTheme("ace/theme/" + e.target.value);
+        if (!flag_changing) {
+            editor.setTheme("ace/theme/" + e.target.value);
+        }
     });
 
     document.querySelector(".language_selector").addEventListener("change", function (e) {
-        editor.getSession().setMode("ace/mode/" + e.target.value);
+        if (!flag_changing) {
+            editor.getSession().setMode("ace/mode/" + e.target.value);
+        }
     });
 
     App.snippet = App.cable.subscriptions.create({channel: "SnippetChannel", room: "<%=@snippet.slug%>"}, {
