@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Rails.application.routes.draw do   
   resources :snippets
 
   get 'snippet/:slug', to: 'snippets#show'
@@ -7,5 +7,5 @@ Rails.application.routes.draw do
 
   mount ActionCable.server => '/cable'
   mount Facebook::Messenger::Server, at: "bot"
-  
+
 end

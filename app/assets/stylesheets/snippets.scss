@@ -13,7 +13,12 @@ $footer_height: 25px;
     height: $header_height;
     width: 100%; 
     background: #FAFAFA;
-    
+    display: flex;
+    align-items: center;
+    svg {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 }
 
 #editor {
