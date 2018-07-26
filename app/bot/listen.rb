@@ -4,24 +4,26 @@ include Facebook::Messenger
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |message|
+    sender = message.sender['id']
 
     Message.create({
-        author: message.sender['id'],
+        author: sender,
         message: message.text
     })
-
-    sender = message.sender['id']
     
-    message.reply(text:  sender.inspect )
-    message.reply(text:  message.class )
-    message.reply(text: message.methods.inspect)
+    filtered_messages = Messages.where("author != ?", sender).map{|msg| "#{msg.author}: #{msg.message}"}
+    filtered_reponses = Reponse.where("sender_id != ?", sender).map{|msg| "#{msg.sender_id}: #{msg.message}"}
+
+    messages_to_send = filtered_messages - filtered_reponses
+
+    messages_to_send.each do |msg|
+        message.reply(text: msg)
+    end
+    
 end
 
 
 Bot.on :message_echo do |message_echo|
-
-    puts "MESSAGE ECHO:" 
-    puts message_echo
 
     Reponse.create({
         sender_id: message_echo.sender['id'],
