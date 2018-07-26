@@ -3,9 +3,12 @@ Each community have experts and apprentices but they can not always be in the sa
 
 ## What it does
 We offer an interactive online editor to allow share an snippet or explain an algorithm bringing experts closer with apprentices in a virtual pair programming experience and chatroom environment, the mentor can assist a student at any time or place, with any coding problem.
- 
-<img src="https://github.com/joelibaceta/live-coding-circle/blob/master/images/screen2.png?raw=true" width="100%"/>
 
+<img src="https://github.com/joelibaceta/live-coding-circle/blob/master/images/screen.gif?raw=true"/>
+
+<br/>
+
+<img src="https://github.com/joelibaceta/live-coding-circle/blob/master/images/screen2.png?raw=true" width="100%"/>
 
 ## How I built it
 We build using Customer Chat SDK to develop the chat room experience into the live coding editor.
