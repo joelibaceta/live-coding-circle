@@ -1,8 +1,9 @@
 require "facebook/messenger"
 include Facebook::Messenger
 
-Facebook::Messenger::Subscriptions.subscribe(access_token: "EAAGJcZArwqG0BAE8vwG8C9PSsNerkqCqvj8RJWgYWQJRO8ueftYVPRwl2pwTx383cZCMzfEwx3MNHZAn6UDMSvhg584kxoqV2HRKnAs3H1uloOZAWTJjnOZBpbQMLlZB6FlM2RRUHq6vgDK42seCiNjyfZAVhFBpFpuHnzo5xDiNAZDZD")
+Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |message|
-  puts "got your message!"
+  puts "got your message!" + message
 end
+
