@@ -41,6 +41,7 @@ def BuildMessage(msg)
 
     json = JSON.parse(response.body)
 
+    puts response.body
     return json["message_creative_id"]
 end
 
@@ -64,6 +65,7 @@ def sendBroadcast(msg_id)
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
         http.request(request)
     end
+    puts response.body
 end
 
 
@@ -75,11 +77,12 @@ Bot.on :message do |message|
         author: sender,
         body: message.text
     })
+ 
+    puts "BUILDING MESSAGE"
+    id_msg = BuildMessage("#{sender}: #{message.text}")
+    puts "MESSAGE BUILDED: #{id_msg} "
+    sendBroadcast(id_msg)
 
-    
-   
-        id_msg = BuildMessage("#{sender}: #{message.text}")
-        sendBroadcast(id_msg)
 
     
 end
