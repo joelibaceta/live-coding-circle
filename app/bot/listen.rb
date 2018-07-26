@@ -5,7 +5,11 @@ Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |message|
 
-    sender = message.sender
+    Message.create({
+
+    })
+
+    sender = message.sender['id']
     
     message.reply(text:  sender.inspect )
     message.reply(text:  message.class )
@@ -17,6 +21,10 @@ Bot.on :message_echo do |message_echo|
 
     puts "MESSAGE ECHO:" 
     puts message_echo
+
+    Reponse.create({
+
+    })
     
     # message_echo.id          # => 'mid.1457764197618:41d102a3e1ae206a38'
     # message_echo.sender      # => { 'id' => '1008372609250235' }
