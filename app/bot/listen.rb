@@ -34,8 +34,8 @@ Bot.on :message_echo do |message_echo|
 
     sender = message_echo.sender['id'];
     Reponse.create({
-        sender_id: sender,
-        message: message_echo.text
+        sender_id: sender.to_s,
+        message: message_echo.text.to_s
     })
     
     # message_echo.id          # => 'mid.1457764197618:41d102a3e1ae206a38'
