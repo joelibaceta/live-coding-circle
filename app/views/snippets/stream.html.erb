@@ -137,7 +137,10 @@
 
 
     function shareOnMSN(){
-        window.open('fb-messenger://share?link=' + window.location.href + '&app_id=' + 432596000483437);
+        FB.ui({
+            method: 'send',
+            link: window.location.href,
+        });
     }
     
 
