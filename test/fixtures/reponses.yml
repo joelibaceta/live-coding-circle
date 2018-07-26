@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sender_id: MyString
+  message: MyString
+  sent_at: 2018-07-26
+
+two:
+  sender_id: MyString
+  message: MyString
+  sent_at: 2018-07-26

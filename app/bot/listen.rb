@@ -14,6 +14,7 @@ end
 
 
 Bot.on :message_echo do |message_echo|
+    
     # message_echo.id          # => 'mid.1457764197618:41d102a3e1ae206a38'
     # message_echo.sender      # => { 'id' => '1008372609250235' }
     # message_echo.seq         # => 73
