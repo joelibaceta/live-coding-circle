@@ -4,7 +4,8 @@ include Facebook::Messenger
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
 Bot.on :message do |message|
-    message.reply(text: 'Your current snippet is:' + session[:current_snippet])
+    message.reply(text: 'Your current snippet is:' + session[:current_snippet].to_s)
+    
 end
 
 Bot.on :referral do |referral|
@@ -13,9 +14,9 @@ Bot.on :referral do |referral|
     # referral.sent_at   # => 2016-04-22 21:30:36 +0200
     # referral.ref       # => 'MYPARAM'
     
-    user = User.find_by(sender_id: referral.sender) 
-    user = User.create({sender_id: referral.sender, sender_id: referral.ref}) unless  user 
-    user.sender_id = referral.ref 
+    user = User.find_by(sender_id: referral.sender.to_s)
+    user = User.create({sender_id: referral.sender.to_s, sender_id: referral.ref.to_s}) unless  user 
+    user.sender_id = referral.ref.to_s 
     user.save
 
     
