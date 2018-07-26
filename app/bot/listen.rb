@@ -18,32 +18,47 @@ def GetAccessToken
 end
 
 def BuildMessage(msg)
-    url = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=#{GetAccessToken}")
+    uri = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=#{AT}")
 
-    http = Net::HTTP.new(url.host, url.port)
-
-    request = Net::HTTP::Post.new(url)
-    request["Content-Type"] = 'application/json'
-
-    request.body = "{    \n  \"messages\": [\n    {\n    \t\"text\":\"#{msg}\"\n    }\n  ]\n}"
+    request = Net::HTTP::Post.new(uri)
+    request.content_type = "application/json" 
+    request.body = JSON.dump({
+        "messages" => [
+            {
+            "text" => msg
+            }
+        ]
+    })
     
-    response = JSON.parse(http.request(request).read_body)
-    return response["message_creative_id"]
+    req_options = {
+        use_ssl: uri.scheme == "https",
+    }
+
+    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+        http.request(request)
+    end
+    return JSON.parse(response.body)["message_creative_id"]
 end
 
 def sendBroadcast(msg_id)
-    require 'uri'
-    require 'net/http'
+    request = Net::HTTP::Post.new(uri)
+    request.content_type = "application/json"
+    request["Cache-Control"] = "no-cache"
+    request["Postman-Token"] = "663c44f2-90da-4c5b-b383-f7c56aea20b8"
+    request.body = JSON.dump({
+        "message_creative_id" => msg_id,
+        "notification_type" => "REGULAR",
+        "messaging_type" => "MESSAGE_TAG",
+        "tag" => "NON_PROMOTIONAL_SUBSCRIPTION"
+    })
 
-    url = URI("https://graph.facebook.com/v3.0/me/broadcast_messages?access_token=#{GetAccessToken}")
+    req_options = {
+        use_ssl: uri.scheme == "https",
+    }
 
-    http = Net::HTTP.new(url.host, url.port)
-
-    request = Net::HTTP::Post.new(url)
-    request["Content-Type"] = 'application/json' 
-    request.body = "{    \n  \"message_creative_id\": #{msg_id},\n  \"notification_type\": \"REGULAR\",\n  \"messaging_type\": \"MESSAGE_TAG\",\n  \"tag\": \"NON_PROMOTIONAL_SUBSCRIPTION\"\n}"
-
-    response = http.request(request) 
+    response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
+        http.request(request)
+    end
 end
 
 
