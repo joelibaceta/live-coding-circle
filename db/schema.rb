@@ -12,18 +12,17 @@
 
 ActiveRecord::Schema.define(version: 2018_07_26_075011) do
 
-  create_table "message", force: :cascade do |t|
+  create_table "messages", force: :cascade do |t|
     t.string "snippet_id"
     t.string "author"
-    t.string "message"
+    t.string "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "user_id"
   end
 
   create_table "reponses", force: :cascade do |t|
     t.string "sender_id"
-    t.string "message"
+    t.string "body"
     t.date "sent_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
