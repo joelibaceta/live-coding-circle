@@ -23,5 +23,5 @@ test:
 production:
   adapter: postgresql
   pool: 5
-  database: postgresql-tapered-82904
+  database: postgresql-adjacent-17189
   encoding: unicode

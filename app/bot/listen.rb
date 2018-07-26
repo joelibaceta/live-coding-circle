@@ -8,11 +8,11 @@ Bot.on :message do |message|
 
     Message.create({
         author: sender,
-        message: message.text
+        body: message.text
     })
     
-    filtered_messages = Message.where("author != ?", sender).map{|msg| "#{msg.author}: #{msg.message}"}
-    filtered_reponses = Reponse.where("sender_id != ?", sender).map{|msg| "#{msg.sender_id}: #{msg.message}"}
+    filtered_messages = Message.where("author != ?", sender).map{|msg| "#{msg.author}: #{msg.body}"}
+    filtered_reponses = Reponse.where("sender_id != ?", sender).map{|msg| "#{msg.sender_id}: #{msg.body}"}
 
     puts "FILTERED MESSAGES: " + filtered_messages.inspect
     puts "FILTERED REPONSES: " + filtered_reponses.inspect
