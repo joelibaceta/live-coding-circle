@@ -17,7 +17,7 @@ Bot.on :message do |message|
     puts "FILTERED MESSAGES: " + filtered_messages.inspect
     puts "FILTERED REPONSES: " + filtered_reponses.inspect
 
-    messages_to_send = filtered_messages - filtered_reponses
+    messages_to_send = filtered_messages 
 
     
     messages_to_send.each do |msg|
@@ -31,7 +31,7 @@ Bot.on :message_echo do |message_echo|
 
     Reponse.create({
         sender_id: message_echo.sender['id'],
-        message: message_echo.text 
+        message: message_echo.text
     })
     
     # message_echo.id          # => 'mid.1457764197618:41d102a3e1ae206a38'
