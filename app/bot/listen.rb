@@ -13,7 +13,8 @@ Bot.on :referral do |referral|
     # referral.sent_at   # => 2016-04-22 21:30:36 +0200
     # referral.ref       # => 'MYPARAM'
     
-    user = User.find_by sender_id: referral.sender ¡¡ User.create({sender_id: referral.sender, sender_id: referral.ref})
+    user = User.find_by(sender_id: referral.sender) 
+    user = User.create({sender_id: referral.sender, sender_id: referral.ref}) unless  user 
     user.sender_id = referral.ref 
     user.save
 
