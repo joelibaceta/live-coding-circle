@@ -18,7 +18,7 @@ def GetAccessToken
 end
 
 def BuildMessage(msg)
-    uri = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=#{GetAccessToken}")
+    uri = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=#EAAGJcZArwqG0BAAm1rK3iW2fBFMQGsiJ4No061CZAr21wngsiNDKzbcgYgoNkhop2pGZBriQjoQtKLVfLnNVx2l3uoZCBoTnO7QWHjJM3ZBubFYZClyE4PWoZCgogZBolD5TjrJwMJ5DGnMCtPB4vNViziUSmIzjg8VNXlmau0AVuwZDZD")
 
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/json" 
@@ -37,7 +37,10 @@ def BuildMessage(msg)
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
         http.request(request)
     end
-    return JSON.parse(response.body)["message_creative_id"]
+
+    json = JSON.parse(response.body)
+
+    return json["message_creative_id"]
 end
 
 def sendBroadcast(msg_id)
