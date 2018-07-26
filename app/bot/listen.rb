@@ -28,7 +28,7 @@ def getname(id)
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
         http.request(request)
     end
-    json = JSON.parse(response)
+    json = JSON.parse(response.body)
     return "#{first_name} #{last_name}"
 end
 
