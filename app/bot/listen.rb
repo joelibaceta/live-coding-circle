@@ -29,7 +29,7 @@ def getname(id)
         http.request(request)
     end
     json = JSON.parse(response.body)
-    return "#{first_name} #{last_name}"
+    return "#{json["first_name"]} #{json["last_name"]}"
 end
 
 def BuildMessage(msg)
