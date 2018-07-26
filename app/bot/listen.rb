@@ -32,8 +32,9 @@ end
  
 Bot.on :message_echo do |message_echo|
 
+    sender = message_echo.sender['id'];
     Reponse.create({
-        sender_id: message_echo.sender['id'],
+        sender_id: sender,
         message: message_echo.text
     })
     
