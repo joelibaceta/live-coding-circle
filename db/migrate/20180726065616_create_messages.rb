@@ -1,4 +1,4 @@
-class CreateMessages < ActiveRecord::Migration[5.2]
+class CreateMessage < ActiveRecord::Migration[5.2]
   def change
     create_table :message do |t|
       t.string :snippet_id
