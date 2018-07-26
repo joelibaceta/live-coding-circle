@@ -1,5 +1,8 @@
 require "facebook/messenger"
 include Facebook::Messenger
+require 'net/http'
+require 'uri'
+require 'json'
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
 
@@ -10,9 +13,10 @@ Bot.on :message do |message|
         author: sender,
         body: message.text
     })
+
     
-    filtered_messages = Message.where("author == ?", sender).map{|msg| "#{msg.author}: #{msg.body}"}
-    filtered_reponses = Reponse.where("sender_id != ?", sender).map{|msg| "#{msg.sender_id}: #{msg.body}"}
+    filtered_messages = Message.where("author == ?", sender).map{|msg| "#{get_name_from_id(msg.author)}: #{msg.body}"}
+    filtered_reponses = Reponse.where("sender_id != ?", sender).map{|msg| "#{get_name_from_id(msg.sender_id)}: #{msg.body}"}
 
     puts "FILTERED MESSAGES: " + filtered_messages.inspect
     puts "FILTERED REPONSES: " + filtered_reponses.inspect
@@ -26,6 +30,11 @@ Bot.on :message do |message|
     
 end
 
+def get_name_from_id(id)
+    uri = URI.parse("https://graph.facebook.com/v3.0/#{id}?access_token=EAAGJcZArwqG0BADe06loLaDDmmZB2t1gLjOaHiqFUZCge4CxPFRQJUQB3vfV2879drxedDh0aiICPxWo5JLfmReiCumSteiNRV8rlZACaKje5fpUDJsWwjZCZCatJCw3D4znVGJYF9ZAuySFhPrxrnLqKHZB1xP6fh9pFktY96h0Ix3cfkOsqVHOhQZBaSEIuLQzgr4zs8ZBJUjSvy42hkbQJTZCLp5TamTg6OWgRHb7Djzprr5KtJEP6wb")
+    response = JSON.parse(Net::HTTP.get_response(uri))
+    return response["name"]
+end
 
 Bot.on :message_echo do |message_echo|
 
