@@ -14,8 +14,10 @@ We offer an interactive online editor to allow share an snippet or explain an al
 We build using Customer Chat SDK to develop the chat room experience into the live coding editor.
 We made an small hack with Messenger Bot for act as a chat room manager.
 
+<img src="https://github.com/joelibaceta/live-coding-circle/blob/master/images/screen3.png?raw=true" width="300px"/>
+
 ## Challenges
-- Use Customer Chat SDK (Beta) for the first time.
+- [Use Customer Chat SDK](https://developers.facebook.com/docs/messenger-platform/discovery/customer-chat-plugin/sdk) (Beta) for the first time. 
 - Find a new way to use Messenger Bot to connect people.
 - Build a useful live code editor
 - Achieve perfect code edition synchrony using websockets
