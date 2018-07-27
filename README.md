@@ -1,8 +1,8 @@
 ## Inspiration
-Each community have experts and apprentices but they can not always be in the same place at the same time, so we developed a LiveCoding Circles to help to bring mentors creating learning groups (circles) beetween people between people from different regions, places or realities democratizing learning.
+Every communities has experts and people who want to learn code or improve their skills but they can't always can be in the same place, at the same time or dont have posibilities to pay for formal education, so we developed LiveCoding Circles as a tool to bring knowledge to people, building learning groups (circles) from different regions, places or realities expanding the reach of the developer circles.
 
 ## What it does
-We offer an interactive online editor to allow share an snippet or explain an algorithm bringing experts closer with apprentices in a virtual pair programming experience and chatroom environment, the mentor can assist a student at any time or place, with any coding problem.
+We offer an interactive online editor to allow share an snippet or explain an algorithm bringing experts closer to apprentices in a pair programming virtual experience and a chatroom environment where a mentor can assist students in any time or place with coding problems.
 
 <img src="https://github.com/joelibaceta/live-coding-circle/blob/master/images/screen.gif?raw=true"/>
 
