@@ -5,6 +5,7 @@
 $header_height: 40px;
 $sidebar_width: 20%;
 $footer_height: 25px;
+$terminal_height: 200px;
 
 #header {
     position: absolute;
@@ -31,7 +32,7 @@ $footer_height: 25px;
     position: absolute;
     top: $header_height;
     right: 0;
-    bottom: $footer_height;
+    bottom: $footer_height + $terminal_height;
     left: 0;
 }
 
@@ -51,6 +52,18 @@ $footer_height: 25px;
         background: none;
     }
  }
+
+#terminal {
+    position: absolute;
+    bottom: $footer_height;
+    height: $terminal_height;
+    left: 0;
+    width: 100%;
+    overflow: scroll; 
+    .xterm {
+        padding: 5px;
+    }
+}
 
 #footer {
     position: absolute;
