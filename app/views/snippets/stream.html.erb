@@ -48,8 +48,9 @@
     </div>
     
 </div> 
-<div id="editor"></div>
 <textarea name="code" id="raw_code" type="hidden" style="display: none;"><%= @snippet.code %></textarea>
+<div id="editor"></div>
+<div id="terminal"></div>
 <div id="footer">
   <span>Theme</span>
   <div >
@@ -82,6 +83,7 @@
     var flag_changing = false;
     var flag_selection_changing = false;
     var emiter = guid();
+    var term = new Terminal();
     
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
@@ -167,9 +169,7 @@
             disconnected() {},
                 // Called when the subscription has been terminated by the server
 
-            received(data) {
-
-                
+            received(data) { 
 
                 flag_changing = true;
                 
@@ -202,6 +202,19 @@
         }
     );
 
+    App.terminal = App.cable.subscriptions.create({channel: "TerminalChannel", session_id: "<%=@snippet.slug%>"}, {
+            connected() {},
+                // Called when the subscription is ready for use on the server
+
+            disconnected() {},
+                // Called when the subscription has been terminated by the server
+
+            received(data) { 
+                term.write(data)
+            }
+        }
+    );
+
     function startStream(){
         streamingPipe = setInterval(function(){
             html2canvas(document.body).then(function(canvas) {
@@ -211,10 +224,14 @@
     }
 
     
+    term.open(document.getElementById('terminal'));
+
+    term.on('key', function(key, e) {
+        term.write(key);
+        App.terminal.send({"char": key});
+    });
     
 </script>
-
-
 
 <!-- Load Facebook SDK for JavaScript -->
 <div id="fb-root"></div>

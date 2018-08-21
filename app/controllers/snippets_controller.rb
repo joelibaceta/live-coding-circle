@@ -8,6 +8,7 @@ class SnippetsController < ApplicationController
   end
 
   def stream
+
     @snippet = Snippet.find_by slug: params[:slug]
     unless @snippet
       @snippet = Snippet.new
