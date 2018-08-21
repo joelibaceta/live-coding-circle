@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require_tree .
 //= require_tree ./channels
+//= require html2canvas/dist/html2canvas
 
 (function() {
     this.App || (this.App = {});
