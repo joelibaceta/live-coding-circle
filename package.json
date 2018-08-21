@@ -1,5 +1,12 @@
 {
   "name": "livecoding-circle",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "html2canvas": "^1.0.0-alpha.12"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:joelibaceta/live-coding-circle.git",
+  "author": "joel ibaceta <mail@joelibaceta.com>",
+  "license": "MIT"
 }
