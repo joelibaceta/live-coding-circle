@@ -22,8 +22,11 @@ class TerminalChannel < ApplicationCable::Channel
         @session.start()
 
         @channel = @session.current_session.open_channel do  |ch|
+
+            puts ch 
+
             ch.on_data do |ch, data|
-                puts data
+                #puts data
                 ActionCable.server.broadcast("terminal_#{params[:session_id]}", data)
             end
         
@@ -48,7 +51,7 @@ class TerminalChannel < ApplicationCable::Channel
     def receive(data)  
         puts @channel 
         puts data
-        @channel.send_data(data["char"]) if @channel
+        p @channel.send_data(data["char"]) if @channel
     end
 
     
