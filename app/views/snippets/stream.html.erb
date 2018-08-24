@@ -226,8 +226,9 @@
     
     term.open(document.getElementById('terminal'));
 
-    term.on('key', function(key, e) {
-        term.write(key);
+    term.fit(); 
+
+    term.on('key', function(key, e) { 
         App.terminal.send({"char": key});
     });
     
