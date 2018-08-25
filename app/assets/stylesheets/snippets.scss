@@ -5,7 +5,8 @@
 $header_height: 40px;
 $sidebar_width: 20%;
 $footer_height: 25px;
-$terminal_height: 208px;
+$terminal_height: 176px;
+$files_bar: 32px;
 
 #header {
     position: absolute;
@@ -28,12 +29,35 @@ $terminal_height: 208px;
     }
 }
 
-#editor {
+#filesbar {
     position: absolute;
     top: $header_height;
+    height: $files_bar;
+    right: 0; 
+    left: 0;
+    background-color: #e5e5e5; 
+    input {
+        margin-left:1px;
+        text-decoration: none;
+        background-color: #f3f3f3;
+        padding: 5px;  
+        border: 0px;
+        line-height: 18px;
+        font-weight: 600;
+        text-align: center;
+    }
+    input:focus {
+        outline: none;
+    }
+}
+
+#editor {
+    position: absolute;
+    top: $header_height + $files_bar;
     right: 0;
     bottom: $footer_height + $terminal_height;
     left: 0;
+    font-size: 11px;
 }
 
 

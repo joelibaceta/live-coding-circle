@@ -12,5 +12,5 @@
  *
  *= require_tree .
  *= require_self
- *= require xterm/dist/xterm 
+ *= require xterm/dist/xterm
  */
