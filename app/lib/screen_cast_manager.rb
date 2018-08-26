@@ -1,5 +1,7 @@
 require 'open3'
 
+require 'pty'
+
 module ScreenCastManager
 
     mattr_accessor  :casts
@@ -28,28 +30,40 @@ module ScreenCastManager
         attr_accessor :write
         attr_accessor :pid
 
-        def initialize(uri)
+        def initialize(uri) 
 
-            @read = ""
-            @write = IO.pipe
- 
+            @semaphore = Mutex.new
 
-            ffmpeg_command = "ffmpeg"
-            ffmpeg_command += " -i - " # read input video from STDIN
-            ffmpeg_command += " -vcodec copy" # encoding H.264
-            ffmpeg_command += " -f flv" # FLV as container format used in conjunction with RTMP
-            ffmpeg_command += " #{uri}"
+            Thread.start do
+                @semaphore.synchronize { 
 
-            puts ffmpeg_command
+                    ffmpeg_command = "ffmpeg"
+                    ffmpeg_command += " -i - " # read input video from STDIN
+                    ffmpeg_command += " -vcodec copy" # encoding H.264
+                    ffmpeg_command += " -f flv " # FLV as container format used in conjunction with RTMP
+                    ffmpeg_command += " test.flv"
 
-            #@pid = spawn(ffmpeg_command)
+                    puts ffmpeg_command 
 
-            @read, @write, stderr, wait_tr = Open3.popen3(ffmpeg_command)
+                    #@pid = spawn(ffmpeg_command)
+                    master, slave = PTY.open
+                    read, write = IO.pipe
+
+                    pid = spawn(ffmpeg_command, in: read, :out=>slave) # write mode
+                    read.close
+                    slave.close
+                    @write = write
+                    puts @write
+                    #@write, x = Open3.pipeline_w(ffmpeg_command)
+
+                }
+            end
             
         end
 
         def send_data(data)
-            @read.write(data)
+            puts @write
+            @write.puts(data)
         end
 
     end

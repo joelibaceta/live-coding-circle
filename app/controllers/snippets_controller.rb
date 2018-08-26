@@ -13,7 +13,12 @@ class SnippetsController < ApplicationController
   end
 
   def broadcast
-    p params["data"]
+    @broadcast = ScreenCastManager.get_broadcast(params[:id])
+    f = params["data"]
+    f.open
+    @broadcast.send_data(f.read)
+    f.close
+    render :nothing => true, :status => 200, layout: false
   end
 
   def stream
