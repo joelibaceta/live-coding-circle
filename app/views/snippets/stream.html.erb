@@ -162,7 +162,6 @@
         }
     }
 
-
     function shareOnMSN(){
         FB.ui({
             method: 'share',
@@ -225,11 +224,47 @@
     );
 
     function startStream(){
-        streamingPipe = setInterval(function(){
-            html2canvas(document.body).then(function(canvas) {
-                console.log(canvas.toDataURL());
-            });
-        }, 3000);
+
+        var canvas = document.createElement('canvas');
+        var streamingPipe;
+
+        App.screen_broadcast = App.cable.subscriptions.create({channel: "ScreenCastChannel", hashcode: "<%=@snippet.slug%>"}, {
+                connected() {
+                    streamingPipe = setInterval(function(){
+                        html2canvas(document.body, {logging:false}).then(function(c) {
+                            var destCtx = canvas.getContext('2d');
+                            destCtx.drawImage(c, 0, 0);
+                        });
+                    }, 1000);
+                },
+                disconnected() {
+                    clearInterval(streamingPipe);
+                }
+            }
+        );
+        
+        var mediaStream = canvas.captureStream(30);
+        console.log("mediaStream:");
+        console.log(mediaStream);
+        var mediaRecorder = new MediaRecorder(mediaStream, {
+            mimeType: 'video/webm;codecs=h264',
+            videoBitsPerSecond : 3 * 1024 * 1024
+        });
+
+        mediaRecorder.ondataavailable = function(e) {
+            var formData = new FormData(); 
+            formData.append("data", e.data);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/snippet/broadcast/<%=@snippet.slug%>', true);
+            xhr.onload = function (oEvent) { };
+            xhr.send(formData);
+        }
+        
+        console.log("mediaRecorder:");
+        console.log(mediaRecorder);
+
+        mediaRecorder.start(1000);
+
     }
     
     term.setOption('fontSize', 11); 
@@ -253,14 +288,14 @@
 </script>
 
 <!-- Load Facebook SDK for JavaScript -->
-<div id="fb-root"></div>
+<%# <div id="fb-root"></div>
 <script>(function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
     js.src = 'https://connect.facebook.net/es_LA/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
     fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+}(document, 'script', 'facebook-jssdk'));</script> %>
 
 <!-- Your customer chat code -->
 <div class="fb-customerchat"

@@ -24,5 +24,5 @@ class SnippetChannel < ApplicationCable::Channel
     # @snippet.save
     ActionCable.server.broadcast("chat_#{params[:room]}", data)
   end
-
+  
 end
