@@ -16,8 +16,7 @@
 //= require_tree .
 //= require_tree ./channels
 //= require html2canvas/dist/html2canvas
-//= require xterm/dist/xterm
-//= require xterm/lib/addons/fit/fit
+//= require xterm/dist/xterm 
 
 (function() {
     this.App || (this.App = {});

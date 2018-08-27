@@ -1,3 +1,0 @@
-class Reponse < ApplicationRecord
-    
-end

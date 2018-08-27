@@ -1,3 +1,5 @@
+require_relative '../lib/pty_session_manager.rb'
+
 class SnippetsController < ApplicationController
   before_action :set_snippet, only: [:show, :edit, :update, :destroy]
 
@@ -8,7 +10,7 @@ class SnippetsController < ApplicationController
   end
 
   def stream
-
+    
     @snippet = Snippet.find_by slug: params[:slug]
     unless @snippet
       @snippet = Snippet.new
@@ -17,7 +19,15 @@ class SnippetsController < ApplicationController
       @snippet.save
       redirect_to stream_path(slug: @snippet.slug)
     end
+
+    unless PTYSessionManager.get_session(@snippet.slug)
+      @pty_session = PTYSessionManager.start_session(@snippet.slug)
+      @pty_session.start(
+        on_data: lambda {|data| ActionCable.server.broadcast("terminal_#{@snippet.slug}", data)}
+      ) 
+    end
     session[:current_snippet] = @snippet.slug
+
 end
 
   # GET /snippets/new

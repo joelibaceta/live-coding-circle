@@ -49,6 +49,9 @@
     
 </div> 
 <textarea name="code" id="raw_code" type="hidden" style="display: none;"><%= @snippet.code %></textarea>
+<div id="filesbar">
+    <div> <input value="untitled" /> </div>
+</div>
 <div id="editor"></div>
 <div id="terminal"></div>
 <div id="footer">
@@ -80,13 +83,19 @@
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
 
+    
+
     var flag_changing = false;
     var flag_selection_changing = false;
     var emiter = guid();
-    var term = new Terminal();
+    var term = new Terminal({
+        rows: 12
+    });
+
+    
     
     var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
+    editor.setTheme("ace/theme/chrome");
     editor.getSession().setMode("ace/mode/<%= @snippet.language %>");
     document.querySelector(".language_selector").value = "<%= @snippet.language%>";
     ace_document = editor.getSession().getDocument();
@@ -222,14 +231,23 @@
             });
         }, 3000);
     }
-
+    
+    term.setOption('fontSize', 11); 
     
     term.open(document.getElementById('terminal'));
-
-    term.fit(); 
+ 
+    term.on('paste', function (data, ev) {
+        App.terminal.send({
+            "char": data,
+            "slug": "<%=@snippet.slug%>"
+        });
+    });
 
     term.on('key', function(key, e) { 
-        App.terminal.send({"char": key});
+        App.terminal.send({
+            "char": key,
+            "slug": "<%=@snippet.slug%>"
+        });
     });
     
 </script>
