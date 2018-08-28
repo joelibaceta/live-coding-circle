@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   get 'snippet/:slug', to: 'snippets#show'
   get 'snippet/:slug/stream', to: 'snippets#stream', :as => :stream
-
+  
   mount ActionCable.server => '/cable'
-  #mount Facebook::Messenger::Server, at: "bot"
+  mount Facebook::Messenger::Server, at: "bot"
   
 end
