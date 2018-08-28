@@ -4,7 +4,7 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-Facebook::Messenger::Subscriptions.subscribe(access_token: ENV["ACCESS_TOKEN"])
+
 
 def GetAccessToken
     # url = URI("https://graph.facebook.com/v3.0/oauth/access_token? grant_type=fb_exchange_token&client_id=432596000483437&client_secret=270b172b42d4fccd6be9b5e9c8ae63f2&fb_exchange_token=#{ENV["ACCESS_TOKEN"]}&%20grant_type=fb_exchange_token")
@@ -17,8 +17,10 @@ def GetAccessToken
     return "EAAGJcZArwqG0BAOyj0tj4hhsPZBXzKCyIjccpm3BTU0YQ9qsZBoHshNEHR6EHtVNPUn6q0ZBQZCZCRv2qYBZAJMEwE3F2TZCXZBTcP2YNitqrQeH5UelTQEusD0gypdW33xZCZBFMU3jeyVnSciMOAx6IicbtZAcgFJta2dk8oYr7XJFOgZDZD"
 end
 
+Facebook::Messenger::Subscriptions.subscribe(access_token: GetAccessToken)
+
 def getname(id)
-    uri = URI.parse("https://graph.facebook.com/#{id}?fields=first_name,last_name,profile_pic&access_token=EAAGJcZArwqG0BAAm1rK3iW2fBFMQGsiJ4No061CZAr21wngsiNDKzbcgYgoNkhop2pGZBriQjoQtKLVfLnNVx2l3uoZCBoTnO7QWHjJM3ZBubFYZClyE4PWoZCgogZBolD5TjrJwMJ5DGnMCtPB4vNViziUSmIzjg8VNXlmau0AVuwZDZD")
+    uri = URI.parse("https://graph.facebook.com/#{id}?fields=first_name,last_name,profile_pic&access_token=" + GetAccessToken)
     request = Net::HTTP::Get.new(uri) 
 
     req_options = {
@@ -34,7 +36,7 @@ end
 
 def BuildMessage(msg)
     
-    uri = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=EAAGJcZArwqG0BAAm1rK3iW2fBFMQGsiJ4No061CZAr21wngsiNDKzbcgYgoNkhop2pGZBriQjoQtKLVfLnNVx2l3uoZCBoTnO7QWHjJM3ZBubFYZClyE4PWoZCgogZBolD5TjrJwMJ5DGnMCtPB4vNViziUSmIzjg8VNXlmau0AVuwZDZD")
+    uri = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=" + GetAccessToken)
 
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/json" 
@@ -61,7 +63,7 @@ def BuildMessage(msg)
 end
 
 def sendBroadcast(msg_id)
-    uri = URI.parse("https://graph.facebook.com/v3.0/me/broadcast_messages?access_token=EAAGJcZArwqG0BAAm1rK3iW2fBFMQGsiJ4No061CZAr21wngsiNDKzbcgYgoNkhop2pGZBriQjoQtKLVfLnNVx2l3uoZCBoTnO7QWHjJM3ZBubFYZClyE4PWoZCgogZBolD5TjrJwMJ5DGnMCtPB4vNViziUSmIzjg8VNXlmau0AVuwZDZD")
+    uri = URI.parse("https://graph.facebook.com/v3.0/me/broadcast_messages?access_token=" + GetAccessToken)
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/json"
     request["Cache-Control"] = "no-cache"
