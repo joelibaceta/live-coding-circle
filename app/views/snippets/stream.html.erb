@@ -21,7 +21,7 @@
     </svg>
     <span> LiveCoder </span>
     <div class="rightButtons">
-        <a href="">
+        <a href="javascript:startStream();">
             <svg width="20px" height="12px" viewBox="0 0 20 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
                 <desc>Created with Sketch.</desc>
@@ -92,7 +92,7 @@
         rows: 12
     });
 
-    
+    var socket = io('http://localhost:8080');
     
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/chrome");
@@ -114,20 +114,20 @@
 
     editor.on("change", function (e) {  
         if (!flag_changing) {
-            App.snippet.send(build_payload(e))
+            App.snippet.send(build_payload(e, "updateContent"))
         }
     });
 
     document.querySelector(".style_selector").addEventListener("change", function (e) {
         if (!flag_changing) {
-            App.snippet.send(build_payload())
+            App.snippet.send(build_payload(null, "updateContent"))
             editor.setTheme("ace/theme/" + e.target.value);
         }
     });
 
     document.querySelector(".language_selector").addEventListener("change", function (e) {
         if (!flag_changing) {
-            App.snippet.send(build_payload())
+            App.snippet.send(build_payload(null, "updateContent"))
             editor.getSession().setMode("ace/mode/" + e.target.value);
         }
     });
@@ -148,9 +148,9 @@
         App.snippet.send(build_payload(null, true))
     }
 
-    function build_payload(e=null, persist=null){
+    function build_payload(e=null, event=null){
         return {
-            persist: persist,
+            event: event,
             emiter: emiter,
             body: ace_document.getValue(), 
             e: e,
@@ -162,6 +162,7 @@
         }
     }
 
+
     function shareOnMSN(){
         FB.ui({
             method: 'share',
@@ -172,11 +173,7 @@
 
     App.snippet = App.cable.subscriptions.create({channel: "SnippetChannel", room: "<%=@snippet.slug%>"}, {
             connected() {},
-                // Called when the subscription is ready for use on the server
-
             disconnected() {},
-                // Called when the subscription has been terminated by the server
-
             received(data) { 
 
                 flag_changing = true;
@@ -210,59 +207,66 @@
         }
     );
 
-    App.terminal = App.cable.subscriptions.create({channel: "TerminalChannel", session_id: "<%=@snippet.slug%>"}, {
-            connected() {},
-                // Called when the subscription is ready for use on the server
+    // App.terminal = App.cable.subscriptions.create({channel: "TerminalChannel", session_id: "<%=@snippet.slug%>"}, {
+    //         connected() {},
+    //             // Called when the subscription is ready for use on the server
 
-            disconnected() {},
-                // Called when the subscription has been terminated by the server
+    //         disconnected() {},
+    //             // Called when the subscription has been terminated by the server
 
-            received(data) { 
-                term.write(data)
-            }
-        }
-    );
+    //         received(data) { 
+    //             term.write(data)
+    //         }
+    //     }
+    // );
+
+    socket.emit('init_pty', {
+        "hashcode": "<%=@snippet.slug%>",
+        "language": "ruby"
+    });
+
+    socket.on('container_<%=@snippet.slug%>', function (data) {
+        term.write(data)
+    });
+
+
+    function stopStream(){
+        socket.emit('stop', "<%=@snippet.slug%>")
+    }
 
     function startStream(){
 
+        var body = document.querySelector("body");
         var canvas = document.createElement('canvas');
-        var streamingPipe;
 
-        App.screen_broadcast = App.cable.subscriptions.create({channel: "ScreenCastChannel", hashcode: "<%=@snippet.slug%>"}, {
-                connected() {
-                    streamingPipe = setInterval(function(){
-                        html2canvas(document.body, {logging:false}).then(function(c) {
-                            var destCtx = canvas.getContext('2d');
-                            destCtx.drawImage(c, 0, 0);
-                        });
-                    }, 1000);
-                },
-                disconnected() {
-                    clearInterval(streamingPipe);
-                }
-            }
-        );
+        canvas.setAttribute("width", document.documentElement.clientWidth);
+        canvas.setAttribute("height", document.documentElement.clientHeight);
         
-        var mediaStream = canvas.captureStream(30);
-        console.log("mediaStream:");
-        console.log(mediaStream);
+        document.querySelector("body").prepend(canvas);
+
+        var streamingPipe; 
+        
+        socket.emit('subscribe', "<%=@snippet.slug%>");
+
+        var streamingPipe = setInterval(function(){
+            html2canvas(document.body, {logging:false}).then(function(c) {
+                var context = canvas.getContext("2d");
+                context.drawImage(c, 0, 0);
+            });
+        }, 1000);
+        
+        var mediaStream = canvas.captureStream(30); 
         var mediaRecorder = new MediaRecorder(mediaStream, {
             mimeType: 'video/webm;codecs=h264',
             videoBitsPerSecond : 3 * 1024 * 1024
         });
 
         mediaRecorder.ondataavailable = function(e) {
-            var formData = new FormData(); 
-            formData.append("data", e.data);
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/snippet/broadcast/<%=@snippet.slug%>', true);
-            xhr.onload = function (oEvent) { };
-            xhr.send(formData);
-        }
-        
-        console.log("mediaRecorder:");
-        console.log(mediaRecorder);
-
+            socket.emit('broadcast', {
+                hashcode: '<%=@snippet.slug%>',
+                frame:  e.data
+            });
+        } 
         mediaRecorder.start(1000);
 
     }
@@ -272,18 +276,45 @@
     term.open(document.getElementById('terminal'));
  
     term.on('paste', function (data, ev) {
-        App.terminal.send({
+        socket.emit("send_data", {
             "char": data,
-            "slug": "<%=@snippet.slug%>"
-        });
+            "hashcode": "<%=@snippet.slug%>"
+        })
+        // App.terminal.send({
+        //     "char": data,
+        //     "slug": "<%=@snippet.slug%>"
+        // });
     });
 
     term.on('key', function(key, e) { 
-        App.terminal.send({
+        socket.emit("send_data", {
             "char": key,
-            "slug": "<%=@snippet.slug%>"
-        });
+            "hashcode": "<%=@snippet.slug%>"
+        })
+        // App.terminal.send({
+        //     "char": key,
+        //     "slug": "<%=@snippet.slug%>"
+        // });
     });
+
+    window.onbeforeunload = function(event)
+    {
+        //App.snippet.unsubscribe();
+        //socket.emit("stop", "<%=@snippet.slug%>")
+        socket.emit("close", "<%=@snippet.slug%>")
+        socket.close()
+        return;
+    };
+
+    // window.onbeforeunload = closingApp;
+
+    // function confirmExit() {
+    //     App.snippet.unsubscribe();
+    //     App.terminal.unsubscribe();
+    //     socket.close()
+    //     return;
+    // }
+
     
 </script>
 

@@ -1,0 +1,3 @@
+[submodule "middleware"]
+	path = middleware
+	url = git@github.com:joelibaceta/WebsiteStreamer.git

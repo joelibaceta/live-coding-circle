@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_25_225137) do
+ActiveRecord::Schema.define(version: 2018_08_29_202657) do
 
   create_table "messages", force: :cascade do |t|
     t.string "snippet_id"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2018_08_25_225137) do
     t.datetime "updated_at", null: false
     t.string "theme"
     t.integer "project_id"
+    t.string "file_path"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,5 +1,4 @@
-require_relative '../lib/pty_session_manager.rb'
-require_relative '../lib/screen_cast_manager.rb'
+require_relative '../lib/pty_session_manager.rb' 
 
 class SnippetsController < ApplicationController
 
@@ -10,33 +9,36 @@ class SnippetsController < ApplicationController
   # GET /snippets/1.json
   def show
       @snippet = Snippet.find_by slug: params[:slug]
-  end
-
-  def broadcast
-    p params["data"]
-  end
+  end 
 
   def stream
     
     @snippet = Snippet.find_by slug: params[:slug]
+
+    
     unless @snippet
       @snippet = Snippet.new
-      @snippet.language = "javascript"
+      @snippet.language = "ruby"
       @snippet.slug = params[:slug] || SecureRandom.alphanumeric(8)
+      @snippet.title = "untitled"
       @snippet.save
+
+
       redirect_to stream_path(slug: @snippet.slug)
     end
 
-    unless PTYSessionManager.get_session(@snippet.slug)
-      @pty_session = PTYSessionManager.start_session(@snippet.slug)
-      @pty_session.start(
-        on_data: lambda {|data| ActionCable.server.broadcast("terminal_#{@snippet.slug}", data)}
-      ) 
+    # unless PTYSessionManager.get_session(@snippet.slug)
+    #   @pty_session = PTYSessionManager.start_session(@snippet.slug)
+    #   @pty_session.start(
+    #     on_data: lambda {|data| ActionCable.server.broadcast("terminal_#{@snippet.slug}", data)}
+    #   )
+    # end
+
+    unless ContainerEngine.get_container(@snippet.slug)
+      @container = ContainerEngine.start_container(@snippet.slug, @snippet.language)
+      @container.start
     end
-    unless ScreenCastManager.get_broadcast(@snippet.slug)
-      @screen_broadcast = ScreenCastManager.start_broadcast(@snippet.slug)
-    end
-    session[:current_snippet] = @snippet.slug
+
 
 end
 

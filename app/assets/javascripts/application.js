@@ -17,6 +17,7 @@
 //= require_tree ./channels
 //= require html2canvas/dist/html2canvas
 //= require xterm/dist/xterm 
+//= require socket.io
 
 (function() {
     this.App || (this.App = {});
