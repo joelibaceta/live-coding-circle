@@ -1,7 +1,36 @@
+<div class="overlay">
+    <fb:login-button data-size="large" data-button-type="continue_with"
+    data-use-continue-as="true" scope="public_profile,email,publish_video,user_videos" type="continue_with" onlogin="checkLoginState();">
+    </fb:login-button>
+</div>
+
+<div id="chatZone">
+
+    <div class="noStreamingMessage">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 125" enable-background="new 0 0 100 100" xml:space="preserve"><g><g><path fill="#dedede" d="M75.505,25.432c-0.56-0.578-1.327-0.906-2.132-0.913c-0.008,0-0.015,0-0.022,0    c-0.796,0-1.56,0.316-2.123,0.88l-0.302,0.302c-1.156,1.158-1.171,3.029-0.033,4.206c5.274,5.451,8.18,12.63,8.18,20.214    c0,7.585-2.905,14.764-8.18,20.214c-1.141,1.178-1.124,3.054,0.037,4.211l0.303,0.302c0.562,0.561,1.324,0.875,2.118,0.875    c0.009,0,0.018,0,0.026,0c0.803-0.007,1.569-0.336,2.128-0.912C81.95,68.158,85.5,59.39,85.5,50.121    C85.5,40.853,81.95,32.085,75.505,25.432z"></path><path fill="#dedede" d="M20.928,50.121c0-7.583,2.905-14.762,8.18-20.214c1.14-1.177,1.124-3.051-0.036-4.209l-0.303-0.302    c-0.563-0.562-1.325-0.877-2.12-0.877c-0.008,0-0.017,0-0.025,0c-0.804,0.007-1.571,0.335-2.13,0.913    C18.049,32.085,14.5,40.853,14.5,50.121c0,9.269,3.549,18.037,9.995,24.689c0.56,0.578,1.327,0.906,2.131,0.913    c0.008,0,0.016,0,0.024,0c0.795,0,1.559-0.315,2.121-0.879l0.303-0.303c1.158-1.158,1.174-3.03,0.035-4.207    C23.833,64.884,20.928,57.705,20.928,50.121z"></path><path fill="#dedede" d="M65.611,36.945c-0.561-0.579-1.33-0.907-2.136-0.913c-0.006,0-0.013,0-0.019,0    c-0.799,0-1.565,0.319-2.128,0.886l-0.147,0.148c-1.151,1.159-1.164,3.026-0.028,4.201c2.311,2.387,3.583,5.532,3.583,8.854    c0,3.323-1.272,6.468-3.582,8.854c-1.137,1.175-1.125,3.042,0.027,4.201l0.147,0.148c0.562,0.567,1.329,0.886,2.128,0.886    c0.006,0,0.013,0,0.019,0c0.806-0.005,1.575-0.334,2.136-0.912c3.44-3.551,5.335-8.23,5.335-13.177    C70.946,45.175,69.052,40.496,65.611,36.945z"></path><path fill="#dedede" d="M38.812,37.06l-0.148-0.148c-0.562-0.563-1.326-0.879-2.121-0.879c-0.008,0-0.016,0-0.024,0    c-0.804,0.006-1.571,0.335-2.131,0.913c-3.439,3.55-5.333,8.229-5.333,13.176c0,4.947,1.894,9.627,5.334,13.177    c0.559,0.577,1.327,0.905,2.131,0.912c0.008,0,0.016,0,0.023,0c0.795,0,1.559-0.315,2.121-0.879l0.148-0.148    c1.158-1.158,1.173-3.03,0.035-4.208c-2.31-2.387-3.583-5.53-3.583-8.854c0-3.322,1.272-6.467,3.583-8.854    C39.986,40.09,39.971,38.217,38.812,37.06z"></path></g><circle fill="#dedede" cx="50" cy="50.009" r="6.5"></circle></g></svg>
+        
+        <a href="javascript:startStream();">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="facebook-live" x="0px" y="0px" viewBox="0 0 185 64" style="enable-background:new 0 0 185 64;" xml:space="preserve">
+            <style type="text/css">
+                .st0{fill:#3D5A98;}
+                .st1{fill:#FFFFFF;}
+                .st2{fill:#EE4242;}
+                .st3{fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;}
+            </style>
+            <path id="Blue_5_" class="st0" d="M60.4,64c1.9,0,3.5-1.6,3.5-3.5V3.5c0-2-1.6-3.5-3.5-3.5H3.5C1.6,0,0,1.6,0,3.5v56.9  c0,2,1.6,3.5,3.5,3.5H60.4z"/>
+            <path id="f" class="st1" d="M44.1,64V39.2h8.3l1.2-9.7h-9.6v-6.2c0-2.8,0.8-4.7,4.8-4.7l5.1,0V10c-0.9-0.1-3.9-0.4-7.4-0.4  c-7.4,0-12.4,4.5-12.4,12.8v7.1h-8.3v9.7h8.3V64H44.1z"/>
+            <g>
+                <path id="Blue_1_" class="st2" d="M181.5,64c1.9,0,3.5-1.6,3.5-3.5V3.5c0-2-1.6-3.5-3.5-3.5H74.2c-1.9,0-3.5,1.6-3.5,3.5v56.9   c0,2,1.6,3.5,3.5,3.5H181.5z"/>
+                <path class="st3" d="M167.1,41.4h-12.7v-7.6h12v-3.9h-12v-7.2h12.7v-4.2h-17.5v27.1h17.5V41.4z M135.5,45.6l9.4-27.1h-5.2L133,39.9   h-0.3l-6.8-21.4h-5.3l9.5,27.1H135.5z M115.8,45.6V18.4H111v27.1H115.8z M105.8,41.3H93.4V18.4h-4.8v27.1h17.3V41.3z"/>
+            </g>
+            </svg>
+        </a>
+        <h3> You have to start a live video session to active this zone, click up to start </h3>
+    </div>
+</div>
 <div id="header">
     <svg class="logo" width="37px" height="25px" viewBox="0 0 37 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
-        <desc>Created with Sketch.</desc>
         <defs>
             <linearGradient x1="50%" y1="82.2224381%" x2="50%" y2="0%" id="linearGradient-1">
                 <stop stop-color="#AD1D81" offset="0%"></stop>
@@ -21,20 +50,6 @@
     </svg>
     <span> LiveCoder </span>
     <div class="rightButtons">
-        <a href="javascript:startStream();">
-            <svg width="20px" height="12px" viewBox="0 0 20 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
-                <desc>Created with Sketch.</desc>
-                <defs></defs>
-                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g id="Artboard-2" transform="translate(-10.000000, -14.000000)" fill="#000000" fill-rule="nonzero">
-                        <g id="Video-Call-595b40b85ba036ed117dbd5b" transform="translate(10.000000, 14.000000)">
-                            <path d="M2,0 C0.9,0 0,0.9 0,2 L0,10 C0,11.1 0.9,12 2,12 L13,12 C14.1,12 15,11.1 15,10 L15,2 C15,0.9 14.1,0 13,0 L2,0 Z M20,1 L16,4 L16,8 L20,11 L20,1 Z" id="Shape"></path>
-                        </g>
-                    </g>
-                </g>
-            </svg>
-        </a>
         <a href="javascript:save();"> 
             <!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg height="16px" id="Layer_1" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="16px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px"><path d="M17.447,16.646C17.08,16.279,16.729,16,16,16s-1.135,0.334-1.463,0.662L10.58,20.62C10.193,21.006,10,21.469,10,22  c0,1.188,1.016,2,2,2c0.516,0,0.986-0.186,1.38-0.58L14,22.8V30c0,1.104,0.896,2,2,2s2-0.896,2-2v-7.2l0.62,0.62  C19.014,23.814,19.484,24,20,24c0.984,0,2-0.813,2-2c0-0.531-0.193-0.994-0.58-1.38L17.447,16.646z M27.952,9.05  C27.473,3.973,23.202,0,18,0c-4.841,0-8.878,3.441-9.801,8.01C8.133,8.008,8.067,8,8,8c-4.418,0-8,3.582-8,8s3.582,8,8,8h0.557  C8.212,23.409,8,22.731,8,22c0-0.727,0.201-1.399,0.562-2H8c-2.206,0-4-1.795-4-4c0-2.178,1.75-3.957,3.918-4l3.534,0.107  l0.668-3.305C12.682,6.02,15.155,4,18,4c3.111,0,5.678,2.332,5.97,5.426l0.195,2.069l1.806,1.03C27.223,13.238,28,14.57,28,16  c0,2.205-1.794,4-4,4h-0.561C23.799,20.6,24,21.273,24,22c0,0.731-0.212,1.409-0.557,2H24c4.418,0,8-3.582,8-8  C32,13.021,30.367,10.427,27.952,9.05z"/></svg>
         </a>
@@ -52,8 +67,10 @@
 <div id="filesbar">
     <div> <input value="untitled" /> </div>
 </div>
-<div id="editor"></div>
-<div id="terminal"></div>
+<div id="mainConainter">
+    <div id="editor"></div>
+    <div id="terminal"></div>
+</div>
 <div id="footer">
   <span>Theme</span>
   <div >
@@ -83,7 +100,8 @@
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
 
-    
+    var fb_access_token = "";
+    var fb_user_id = "";
 
     var flag_changing = false;
     var flag_selection_changing = false;
@@ -168,8 +186,7 @@
             method: 'share',
             link: window.location.href,
         });
-    }
-    
+    } 
 
     App.snippet = App.cable.subscriptions.create({channel: "SnippetChannel", room: "<%=@snippet.slug%>"}, {
             connected() {},
@@ -210,10 +227,8 @@
     // App.terminal = App.cable.subscriptions.create({channel: "TerminalChannel", session_id: "<%=@snippet.slug%>"}, {
     //         connected() {},
     //             // Called when the subscription is ready for use on the server
-
     //         disconnected() {},
     //             // Called when the subscription has been terminated by the server
-
     //         received(data) { 
     //             term.write(data)
     //         }
@@ -223,18 +238,27 @@
     socket.emit('init_pty', {
         "hashcode": "<%=@snippet.slug%>",
         "language": "ruby"
-    });
+    }); 
 
     socket.on('container_<%=@snippet.slug%>', function (data) {
         term.write(data)
     });
 
+    socket.on('start_comments_buffering_<%=@snippet.slug%>', function (data) {
+         var source = new EventSource("https://streaming-graph.facebook.com/" + data +  "/live_comments?access_token=" + fb_access_token + "&comment_rate=one_per_two_seconds");
+        source.onmessage = function(event) {
+            console.log(event);
+        };
+    });
 
     function stopStream(){
         socket.emit('stop', "<%=@snippet.slug%>")
     }
 
     function startStream(){
+
+        var nostreamingmessage = document.querySelector(".noStreamingMessage");
+        nostreamingmessage.style.display="none";
 
         var body = document.querySelector("body");
         var canvas = document.createElement('canvas');
@@ -246,7 +270,11 @@
 
         var streamingPipe; 
         
-        socket.emit('subscribe', "<%=@snippet.slug%>");
+        socket.emit('subscribe', {
+            hashcode: "<%=@snippet.slug%>",
+            fb_token: fb_access_token,
+            fb_user_id: fb_user_id
+        });
 
         var streamingPipe = setInterval(function(){
             html2canvas(document.body, {logging:false}).then(function(c) {
@@ -266,7 +294,7 @@
                 hashcode: '<%=@snippet.slug%>',
                 frame:  e.data
             });
-        } 
+        }
         mediaRecorder.start(1000);
 
     }
@@ -315,21 +343,25 @@
     //     return;
     // }
 
-    FB.getLoginStatus(function(response) {
-        console.log(response);
-    });
+    function checkLoginState(){
+        var overlay = document.querySelector(".overlay");
+        FB.getLoginStatus(function(response) {
+            if (response.status == "connected"){
+                fb_access_token = response.authResponse.accessToken; 
+                fb_user_id = response.authResponse.userID;
+                overlay.style.display="none";
+            } else {
+                overlay.style.display="flex";
+            }
+        });
+    }
+
+    function init() {
+        checkLoginState();
+    }
 
     
 </script>
 
 
-
-<!-- Your customer chat code -->
-<div class="fb-customerchat"
-    attribution=setup_tool
-    page_id="246554892840514"
-    theme_color="#fa3c4c"
-    logged_in_greeting="Welcome, The live coding session has been started"
-    logged_out_greeting="Welcome, The live coding session has been started"
-    ref="<%= @snippet.slug %>">
-</div>
+ 

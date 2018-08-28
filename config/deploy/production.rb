@@ -10,13 +10,15 @@
 server '167.99.239.147', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:joelibaceta/live-coding-circle.git'
-set :application,     'livecoding-circles'
+set :application,     'live-coding-circles'
 set :user,            'developer'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 
 set :rvm_type, :user 
 set :rvm_ruby_version, '2.5.1'
+
+set :nginx_server_name, "localhost #{fetch(:application)}.local 167.99.239.147"
 
 # Don't change these unless you know what you're doing
 set :pty,             true
