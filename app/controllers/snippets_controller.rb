@@ -1,12 +1,19 @@
 require_relative '../lib/pty_session_manager.rb'
+require_relative '../lib/screen_cast_manager.rb'
 
 class SnippetsController < ApplicationController
+
+  skip_before_action :verify_authenticity_token  
   before_action :set_snippet, only: [:show, :edit, :update, :destroy]
 
   # GET /snippets/1
   # GET /snippets/1.json
   def show
       @snippet = Snippet.find_by slug: params[:slug]
+  end
+
+  def broadcast
+    p params["data"]
   end
 
   def stream
@@ -25,6 +32,9 @@ class SnippetsController < ApplicationController
       @pty_session.start(
         on_data: lambda {|data| ActionCable.server.broadcast("terminal_#{@snippet.slug}", data)}
       ) 
+    end
+    unless ScreenCastManager.get_broadcast(@snippet.slug)
+      @screen_broadcast = ScreenCastManager.start_broadcast(@snippet.slug)
     end
     session[:current_snippet] = @snippet.slug
 
