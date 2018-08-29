@@ -119,7 +119,7 @@
         rows: 12
     });
 
-    var socket = io('https://livecodingcircles.tk:4000');
+    var socket = io('wss://livecodingcircles.tk:4000');
     
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/chrome");
@@ -263,7 +263,7 @@
     });
 
     socket.on('start_comments_buffering_<%=@snippet.slug%>', function (data) {
-         var source = new EventSource("https://streaming-graph.facebook.com/" + data +  "/live_comments?access_token=" + fb_access_token + "&comment_rate=one_per_two_seconds");
+         var source = new EventSource("wss://streaming-graph.facebook.com/" + data +  "/live_comments?access_token=" + fb_access_token + "&comment_rate=one_per_two_seconds");
         source.onmessage = function(event) {
             console.log(event);
         };
