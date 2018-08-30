@@ -168,6 +168,10 @@
             App.snippet.send(build_payload(null, "updateContent"))
             editor.getSession().setMode("ace/mode/" + e.target.value);
             current_language = e.target.value;
+            socket.emit('init_pty', {
+                "hashcode": "<%=@snippet.slug%>",
+                "language": current_language
+            });
         }
     });
 
