@@ -65,7 +65,7 @@
 </div> 
 <textarea name="code" id="raw_code" type="hidden" style="display: none;"><%= @snippet.code %></textarea>
 <div id="filesbar">
-    <div> <input onfocus="savePrevious(this)" onchange="renameFile(this)" value="untitled" /> </div>
+    <div> <input id="titleSnippet" onfocus="savePrevious()" onchange="renameFile()" value="untitled" /> </div>
 </div>
 <div id="mainConainter">
     <div id="editor"></div>
@@ -173,16 +173,17 @@
         }
     });
 
-    function savePrevious(element) {
-        filename = this.value;
+    function savePrevious() {
+        var name = document.querySelector("#titleSnippet").value;
+        filename = name;
     }
 
-    function renameFile(element) {
-        self = this;
+    function renameFile() { 
+        var new_name = document.querySelector("#titleSnippet").value;
         socket.emit('rename_file', {
             "hashcode": "<%=@snippet.slug%>",
             "previous_name": filename,
-            "new_name": self.value
+            "new_name": new_name
         })
     }    
 
