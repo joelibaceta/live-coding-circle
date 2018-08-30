@@ -14,7 +14,7 @@ def GetAccessToken
     # request = Net::HTTP::Get.new(url) 
     # response = JSON.parse(http.request(request).read_body)
     # return response["access_token"]
-    return "EAAGJcZArwqG0BAAm1rK3iW2fBFMQGsiJ4No061CZAr21wngsiNDKzbcgYgoNkhop2pGZBriQjoQtKLVfLnNVx2l3uoZCBoTnO7QWHjJM3ZBubFYZClyE4PWoZCgogZBolD5TjrJwMJ5DGnMCtPB4vNViziUSmIzjg8VNXlmau0AVuwZDZD"
+    return "432596000483437|UtxosHNq33GCzyzxNCUAga3l4GM"
 end
 
 def getname(id)

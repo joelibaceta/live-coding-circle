@@ -5,10 +5,58 @@
 $header_height: 40px;
 $sidebar_width: 20%;
 $footer_height: 25px;
-$terminal_height: 176px;
+$terminal_height: 166px;
 $files_bar: 32px;
+$chat_zone_width: 300px;
 
 
+.overlay{
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color:rgba(0,0,0,0.4);
+    z-index: 100;
+    justify-content: center;
+
+
+    .fb_iframe_widget {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
+
+#chatZone {
+    position: absolute;
+    top: $header_height;
+    right: 0;
+    bottom: $footer_height;
+    width: $chat_zone_width;
+    z-index: 10;
+    background-color: #fff;
+    border-left: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+    border-top: 1px solid #dedede;
+    a {
+        padding-left: 60px;
+        padding-right: 60px;
+        text-decoration: none;
+        display: block;
+    }
+    a:hover {
+        background: none;
+    }
+    h3 {
+        color: #c0c0c0;
+        font-family: helvetica;
+    }
+
+    .noStreamingMessage {
+        padding: 40px;
+        text-align: center;
+    }
+}
 
 #header {
     position: absolute;
@@ -25,9 +73,17 @@ $files_bar: 32px;
         margin-right: 10px;
         margin-top: -5px;
     }
+    a.golive {
+        width: 64px;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 8px;
+        height: 30px;
+    }
     a {
         width: 40px;
         text-align: center;
+        padding-top: 5px;
     }
 }
 
@@ -57,7 +113,7 @@ $files_bar: 32px;
 #editor {
     position: absolute;
     top: $header_height + $files_bar;
-    right: 0;
+    right: $chat_zone_width;
     bottom: $footer_height + $terminal_height;
     left: 0;
     font-size: 11px;
@@ -85,7 +141,7 @@ $files_bar: 32px;
     bottom: $footer_height;
     height: $terminal_height;
     left: 0;
-    width: 100%;
+    right: $chat_zone_width;
     overflow: scroll; 
     .xterm {
         padding: 5px;
