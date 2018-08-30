@@ -5,7 +5,6 @@ require 'uri'
 require 'json'
 
 
-
 def GetAccessToken
     # url = URI("https://graph.facebook.com/v3.0/oauth/access_token? grant_type=fb_exchange_token&client_id=432596000483437&client_secret=270b172b42d4fccd6be9b5e9c8ae63f2&fb_exchange_token=#{ENV["ACCESS_TOKEN"]}&%20grant_type=fb_exchange_token")
 
@@ -14,7 +13,7 @@ def GetAccessToken
     # request = Net::HTTP::Get.new(url) 
     # response = JSON.parse(http.request(request).read_body)
     # return response["access_token"]
-    return "EAAGJcZArwqG0BAOyj0tj4hhsPZBXzKCyIjccpm3BTU0YQ9qsZBoHshNEHR6EHtVNPUn6q0ZBQZCZCRv2qYBZAJMEwE3F2TZCXZBTcP2YNitqrQeH5UelTQEusD0gypdW33xZCZBFMU3jeyVnSciMOAx6IicbtZAcgFJta2dk8oYr7XJFOgZDZD"
+    return "EAAGJcZArwqG0BAN55iyPZAaJN7lmImcLLpP3fgbZBdYb9U60iOcWJkG6ys3Uit2KWFHdG0jZBKXL9ZAVBCXMOGHjXQn0RWFdHZAxZAnQ123ap9ZBVuZBqQPGZCeFZBb2ZAgx10bSPAPzEutphMs3Fj6xIpEtzluFRehlAmXZC1lQuZAWXbYQZDZD"
 end
 
 Facebook::Messenger::Subscriptions.subscribe(access_token: GetAccessToken)
@@ -103,21 +102,4 @@ Bot.on :message do |message|
 
     
 end
- 
-Bot.on :message_echo do |message_echo|
-
-    sender = message_echo.sender['id'];
-    Reponse.create({
-        sender_id: sender.to_s,
-        body: message_echo.text.to_s
-    })
-    
-    # message_echo.id          # => 'mid.1457764197618:41d102a3e1ae206a38'
-    # message_echo.sender      # => { 'id' => '1008372609250235' }
-    # message_echo.seq         # => 73
-    # message_echo.sent_at     # => 2016-04-22 21:30:36 +0200
-    # message_echo.text        # => 'Hello, bot!'
-    # message_echo.attachments # => [ { 'type' => 'image', 'payload' => { 'url' => 'https://www.example.com/1.jpg' } } ]
   
-    # Log or store in your storage method of choice (skynet, obviously)
-end
