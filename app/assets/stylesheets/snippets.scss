@@ -19,7 +19,7 @@ $chat_zone_width: 300px;
     background-color:rgba(0,0,0,0.4);
     z-index: 100;
     justify-content: center;
-
+    display: flex;
 
     .fb_iframe_widget {
         margin-top: auto;
@@ -27,36 +27,36 @@ $chat_zone_width: 300px;
     }
 }
 
-#chatZone {
-    position: absolute;
-    top: $header_height;
-    right: 0;
-    bottom: $footer_height;
-    width: $chat_zone_width;
-    z-index: 10;
-    background-color: #fff;
-    border-left: 1px solid #dedede;
-    border-bottom: 1px solid #dedede;
-    border-top: 1px solid #dedede;
-    a {
-        padding-left: 60px;
-        padding-right: 60px;
-        text-decoration: none;
-        display: block;
-    }
-    a:hover {
-        background: none;
-    }
-    h3 {
-        color: #c0c0c0;
-        font-family: helvetica;
-    }
+// #chatZone {
+//     position: absolute;
+//     top: $header_height;
+//     right: 0;
+//     bottom: $footer_height;
+//     width: $chat_zone_width;
+//     z-index: 10;
+//     background-color: #fff;
+//     border-left: 1px solid #dedede;
+//     border-bottom: 1px solid #dedede;
+//     border-top: 1px solid #dedede;
+//     a {
+//         padding-left: 60px;
+//         padding-right: 60px;
+//         text-decoration: none;
+//         display: block;
+//     }
+//     a:hover {
+//         background: none;
+//     }
+//     h3 {
+//         color: #c0c0c0;
+//         font-family: helvetica;
+//     }
 
-    .noStreamingMessage {
-        padding: 40px;
-        text-align: center;
-    }
-}
+//     .noStreamingMessage {
+//         padding: 40px;
+//         text-align: center;
+//     }
+// }
 
 #header {
     position: absolute;
@@ -113,7 +113,7 @@ $chat_zone_width: 300px;
 #editor {
     position: absolute;
     top: $header_height + $files_bar;
-    right: $chat_zone_width;
+    right: 0;
     bottom: $footer_height + $terminal_height;
     left: 0;
     font-size: 11px;
@@ -141,7 +141,7 @@ $chat_zone_width: 300px;
     bottom: $footer_height;
     height: $terminal_height;
     left: 0;
-    right: $chat_zone_width;
+    right: 0;
     overflow: scroll; 
     .xterm {
         padding: 5px;
