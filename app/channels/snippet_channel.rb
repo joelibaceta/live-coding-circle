@@ -9,6 +9,8 @@ class SnippetChannel < ApplicationCable::Channel
   end
 
   def receive(data)
+
+    ActionCable.server.broadcast("chat_#{params[:room]}", data)
     
     if (data["event"] != "updateContent")
       @snippet = Snippet.find_by slug: data["slug"]
@@ -18,7 +20,7 @@ class SnippetChannel < ApplicationCable::Channel
       @snippet.save
     end
 
-    ActionCable.server.broadcast("chat_#{params[:room]}", data)
+    
   end
   
 end
