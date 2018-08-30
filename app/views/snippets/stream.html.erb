@@ -131,7 +131,7 @@
     });
 
     var socket = io('wss://livecodingcircles.tk');
-    
+
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/chrome");
     editor.getSession().setMode("ace/mode/<%= @snippet.language %>");
@@ -220,7 +220,7 @@
             slug: "<%=@snippet.slug%>",
             title: filename,
             theme: document.querySelector(".style_selector").value,
-            language: document.querySelector(".language_selector").value,
+            language: current_language,
             cursor_position: editor.getCursorPosition(),
             selection_range: selection.getRange()
         }

@@ -12,7 +12,7 @@ class SnippetChannel < ApplicationCable::Channel
 
     ActionCable.server.broadcast("chat_#{params[:room]}", data)
     
-    if (data["event"] != "updateContent")
+    if (data["event"] == "updateContent")
       @snippet = Snippet.find_by slug: data["slug"]
       @snippet.code = data["body"]
       @snippet.theme = data["theme"]
