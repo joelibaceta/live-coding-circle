@@ -4,22 +4,13 @@ require 'net/http'
 require 'uri'
 require 'json'
 
+@accesstoken = "EAAGJcZArwqG0BAN55iyPZAaJN7lmImcLLpP3fgbZBdYb9U60iOcWJkG6ys3Uit2KWFHdG0jZBKXL9ZAVBCXMOGHjXQn0RWFdHZAxZAnQ123ap9ZBVuZBqQPGZCeFZBb2ZAgx10bSPAPzEutphMs3Fj6xIpEtzluFRehlAmXZC1lQuZAWXbYQZDZD"
 
-def GetAccessToken
-    # url = URI("https://graph.facebook.com/v3.0/oauth/access_token? grant_type=fb_exchange_token&client_id=432596000483437&client_secret=270b172b42d4fccd6be9b5e9c8ae63f2&fb_exchange_token=#{ENV["ACCESS_TOKEN"]}&%20grant_type=fb_exchange_token")
 
-    # http = Net::HTTP.new(url.host, url.port)
-
-    # request = Net::HTTP::Get.new(url) 
-    # response = JSON.parse(http.request(request).read_body)
-    # return response["access_token"]
-    return "EAAGJcZArwqG0BAN55iyPZAaJN7lmImcLLpP3fgbZBdYb9U60iOcWJkG6ys3Uit2KWFHdG0jZBKXL9ZAVBCXMOGHjXQn0RWFdHZAxZAnQ123ap9ZBVuZBqQPGZCeFZBb2ZAgx10bSPAPzEutphMs3Fj6xIpEtzluFRehlAmXZC1lQuZAWXbYQZDZD"
-end
-
-Facebook::Messenger::Subscriptions.subscribe(access_token: GetAccessToken)
+Facebook::Messenger::Subscriptions.subscribe(access_token: @accesstoken)
 
 def getname(id)
-    uri = URI.parse("https://graph.facebook.com/#{id}?fields=first_name,last_name,profile_pic&access_token=" + GetAccessToken)
+    uri = URI.parse("https://graph.facebook.com/#{id}?fields=first_name,last_name,profile_pic&access_token=" + @accesstoken)
     request = Net::HTTP::Get.new(uri) 
 
     req_options = {
@@ -35,7 +26,7 @@ end
 
 def BuildMessage(msg)
     
-    uri = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=" + GetAccessToken)
+    uri = URI("https://graph.facebook.com/v3.0/me/message_creatives?access_token=" + @accesstoken)
 
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/json" 
@@ -62,7 +53,7 @@ def BuildMessage(msg)
 end
 
 def sendBroadcast(msg_id)
-    uri = URI.parse("https://graph.facebook.com/v3.0/me/broadcast_messages?access_token=" + GetAccessToken)
+    uri = URI.parse("https://graph.facebook.com/v3.0/me/broadcast_messages?access_token=" + @accesstoken)
     request = Net::HTTP::Post.new(uri)
     request.content_type = "application/json"
     request["Cache-Control"] = "no-cache"
