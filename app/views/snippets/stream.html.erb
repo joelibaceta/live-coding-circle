@@ -276,7 +276,7 @@
 
     socket.emit('init_pty', {
         "hashcode": "<%=@snippet.slug%>",
-        "language": "ruby"
+        "language": current_language
     }); 
 
     socket.on('container_<%=@snippet.slug%>', function (data) {

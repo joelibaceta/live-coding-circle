@@ -23,7 +23,6 @@ class SnippetsController < ApplicationController
       @snippet.title = "untitled"
       @snippet.save
 
-
       redirect_to stream_path(slug: @snippet.slug)
     end
 
