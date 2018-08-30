@@ -79,17 +79,11 @@ end
 Bot.on :message do |message|
     
     sender = message.sender['id']
-
-    Message.create({
-        author: sender,
-        body: message.text
-    })
  
     puts "BUILDING MESSAGE"
     id_msg = BuildMessage("#{getname(sender)}: #{message.text}")
     puts "MESSAGE BUILDED: #{id_msg} "
     sendBroadcast(id_msg)
-
 
     
 end
