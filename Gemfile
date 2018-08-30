@@ -29,6 +29,9 @@ gem "net-ssh"
 
 gem "faye-rails"
 gem "thin"
+
+gem 'therubyracer'
+gem 'execjs'
  
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

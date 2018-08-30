@@ -135,6 +135,7 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    libv8 (3.16.14.19)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -193,6 +194,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    ref (2.0.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.1)
     sass (3.5.7)
@@ -225,6 +227,9 @@ GEM
     sshkit (1.17.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     thin (1.7.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -264,6 +269,7 @@ DEPENDENCIES
   capybara (>= 2.15, < 4.0)
   chromedriver-helper
   coffee-rails (~> 4.2)
+  execjs
   facebook-messenger
   faye-rails
   jbuilder (~> 2.5)
@@ -276,6 +282,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
+  therubyracer
   thin
   turbolinks (~> 5)
   tzinfo-data
