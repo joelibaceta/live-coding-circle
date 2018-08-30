@@ -1,0 +1,3 @@
+upstream puma {
+  server unix:///home/deploy/apps/appname/shared/tmp/sockets/appname-puma.sock;
+}

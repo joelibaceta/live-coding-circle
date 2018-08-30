@@ -21,7 +21,5 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: postgresql
-  pool: 5
-  database: postgresql-adjacent-17189
-  encoding: unicode
+  <<: *default
+  database: db/production.sqlite3
