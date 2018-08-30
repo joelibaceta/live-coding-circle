@@ -17,6 +17,7 @@ class SnippetChannel < ApplicationCable::Channel
       @snippet.code = data["body"]
       @snippet.theme = data["theme"]
       @snippet.language = data["language"]
+      @snippet.title = data["title"]
       @snippet.save
     end
 

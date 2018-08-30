@@ -185,11 +185,12 @@
             "previous_name": filename,
             "new_name": new_name
         })
+        App.snippet.send(build_payload(null, "updateContent"));
     }    
 
     function save()
     {
-        App.snippet.send(build_payload(null, true))
+        App.snippet.send(build_payload(null, "updateContent"));
     }
 
     function build_payload(e=null, event=null){
@@ -208,6 +209,7 @@
             body: ace_document.getValue(), 
             e: e,
             slug: "<%=@snippet.slug%>",
+            title: filename
             theme: document.querySelector(".style_selector").value,
             language: document.querySelector(".language_selector").value,
             cursor_position: editor.getCursorPosition(),
