@@ -176,6 +176,15 @@
     }
 
     function build_payload(e=null, event=null){
+
+        if (event== "updateContent") {
+            socket.emit('update_file', {
+                "hashcode": "<%=@snippet.slug%>",
+                "title": "<%=@snippet.title%>",
+                "content": ace_document.getValue(),
+            }); 
+        }
+
         return {
             event: event,
             emiter: emiter,
