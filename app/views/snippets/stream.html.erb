@@ -112,7 +112,8 @@
     var fb_access_token = "";
     var fb_user_id = "";
     var filename = "";
-
+    var current_language = "<%= @snippet.language%>";
+    var current_theme ="";
     var flag_changing = false;
     var flag_selection_changing = false;
     var emiter = guid();
@@ -157,6 +158,7 @@
         if (!flag_changing) {
             App.snippet.send(build_payload(null, "updateContent"))
             editor.getSession().setMode("ace/mode/" + e.target.value);
+            current_language = e.target.value;
         }
     });
 
@@ -338,7 +340,8 @@
     term.on('paste', function (data, ev) {
         socket.emit("send_data", {
             "char": data,
-            "hashcode": "<%=@snippet.slug%>"
+            "hashcode": "<%=@snippet.slug%>",
+            "language": current_language
         })
         // App.terminal.send({
         //     "char": data,
